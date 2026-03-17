@@ -110,6 +110,11 @@ function goRoom(r){
   t.classList.add('show');
   clearTimeout(tt);
   tt=setTimeout(()=>t.classList.remove('show'),2300);
+
+  // ── 발소리 재생 ──
+  const snd = new Audio('sound/footstep.mp3');
+  snd.volume = 0.8;
+  snd.play().catch(()=>{});
 }
 
 /* ── 탈출 팝업 ── */
