@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>라운지</title>
+    <link rel="stylesheet" href="../css/lounge.css" />
+</head>
+<body>
+    <div class="page">
+        <main class="layout">
+        <section class="scene-panel">
+            <div class="scene-wrapper">
+            <!-- 배경 이미지 -->
+            <img src="../images/lounge.jpg" alt="라운지" class="scene-image" />
+
+            <!-- 이미지 위 UI + 클릭 영역 -->
+            <div class="scene-overlay">
+                <!-- 상단 좌측: 현재 위치 -->
+                <div class="location-badge">
+                    <div class="location-title">현재 위치 : 라운지</div>
+                    <div class="location-desc">공간을 조사해 단서를 찾아보세요.</div>
+                </div>
+
+                <!-- 상단 우측: 맵 버튼 -->
+                <button id="mapBtn" class="ui-square-btn map-btn" title="맵">
+                맵
+                </button>
+
+                <!-- 사물함 클릭 영역 -->
+                <button
+                id="lockerBtn"
+                class="hotspot"
+                style="left: 50%; top: 10%; width: 35%; height: 30%;"
+                >
+                사물함
+                </button>
+
+                <!-- 소파 클릭 영역 -->
+                <button
+                id="sofaBtn"
+                class="hotspot"
+                style="left: 50%; top: 45%; width: 24%; height: 18%;"
+                >
+                소파
+                </button>
+
+                <!-- 하단 중앙: 획득한 아이템 -->
+                <div class="inventory-bar">
+                <div class="inventory-title">획득한 아이템</div>
+                <div id="inventoryInline" class="inventory-inline">
+                    <span id="emptyText" class="empty-text">아직 획득한 아이템이 없습니다.</span>
+                </div>
+
+                <!-- 기존 JS 호환용 숨김 UL -->
+                <ul id="inventoryList" class="inventory-list hidden-list"></ul>
+                </div>
+
+                <!-- 하단 우측: 탈출 시도 버튼 -->
+                <button id="escapeBtn" class="ui-square-btn escape-btn" title="탈출 시도">
+                탈출
+                </button>
+            </div>
+            </div>
+        </section>
+        </main>
+    </div>
+
+    <!-- 아이템 발견 모달 -->
+    <div id="itemModal" class="modal-backdrop">
+        <div class="modal">
+        <h2 id="modalTitle">아이템 발견</h2>
+        <p id="modalText">무언가를 발견했습니다.</p>
+        <button id="closeModalBtn">닫기</button>
+        </div>
+    </div>
+
+    <script src="../js/lounge.js"></script>
+</body>
+</html>
