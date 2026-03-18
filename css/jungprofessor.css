@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>escape kopo</title>
-    <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
@@ -435,9 +429,3 @@ html, body {
   box-shadow:0 4px 20px rgba(0,0,0,.4);
 }
 #toast.show { opacity:1; }
-</style>
-</head>
-<body>
-    
-</body>
-</html>
