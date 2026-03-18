@@ -45,29 +45,25 @@
 
     <!-- 오른쪽 상단 MAP -->
     <div id="hud-topright">
-        <button id="map-toggle" onclick="toggleMap()">🗺 MAP</button>
-        <div id="map-panel">
-            <h3>🗺 MAP — 이동하기</h3>
-
-            <div class="mroom" onclick="goRoom('강의실')">
+    <button id="map-toggle" onclick="toggleMap()">🗺 MAP</button>
+    <div id="map-panel">
+        
+        <h3>🗺 MAP — 이동하기</h3>
+        <div class="mroom" onclick="goRoom('강의실')">
             <div class="mdot"></div>강의실<span class="mtag">→</span>
-            </div>
-
-            <div class="mroom" onclick="goRoom('교수님 연구실')">
-            <div class="mdot"></div>교수님 연구실<span class="mtag">→</span>
-            </div>
-
-            <div class="mroom" onclick="goRoom('복도')">
-            <div class="mdot"></div>복도<span class="mtag">→</span>
-            </div>
-
-            <div class="mroom" onclick="goRoom('라운지')">
+        </div>
+        <div class="mroom" onclick="goRoom('장석주 교수님 연구실')">
+            <div class="mdot"></div>장석주 교수님 연구실<span class="mtag">→</span>
+        </div>
+        <div class="mroom" onclick="goRoom('정원치 교수님 연구실')">
+            <div class="mdot"></div>정원치 교수님 연구실<span class="mtag">→</span>
+        </div>
+        <div class="mroom here" onclick="goRoom('라운지')">
             <div class="mdot"></div>라운지<span class="mtag">→</span>
-            </div>
-
-            <div class="mroom here">
+        </div>
+        <div class="mroom here">
             <div class="mdot"></div>서버실<span class="mtag">현재</span>
-            </div>
+        </div>
         </div>
     </div>
 

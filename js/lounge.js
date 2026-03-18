@@ -158,27 +158,52 @@ function showPopup(id, viewOnly){
 
 /* ── MAP ── */
 function toggleMap() {
-    document.getElementById("map-panel").classList.toggle("open");
+  document.getElementById("map-panel").classList.toggle("open");
 }
 
 document.addEventListener("click", (e) => {
-    if (!document.getElementById("hud-topright").contains(e.target)) {
-        document.getElementById("map-panel").classList.remove("open");
-    }
+  if (!document.getElementById("hud-topright").contains(e.target)) {
+    document.getElementById("map-panel").classList.remove("open");
+  }
 });
 
 let tt;
 
-function goRoom(r) {
-    document.getElementById("map-panel").classList.remove("open");
+function goRoom(roomName) {
+  const roomPaths = {
+    "강의실": "./classroom.html",
+    "정원치 교수님 연구실": "./jungprofessor.html",
+    "라운지": "./lounge.html",
+    "서버실": "./server-room.html"
+  };
 
-    const t = document.getElementById("toast");
-    t.textContent = `📍 ${r} 으로 이동합니다…`;
+  document.getElementById("map-panel").classList.remove("open");
+
+  const t = document.getElementById("toast");
+  const targetPath = roomPaths[roomName];
+
+  if (!targetPath) {
+    t.textContent = `❗ ${roomName} 페이지가 아직 없습니다.`;
     t.classList.add("show");
-
     clearTimeout(tt);
     tt = setTimeout(() => t.classList.remove("show"), 2300);
+    return;
+  }
+
+  t.textContent = `📍 ${roomName} 으로 이동합니다…`;
+  t.classList.add("show");
+
+  clearTimeout(tt);
+  tt = setTimeout(() => {
+    t.classList.remove("show");
+    window.location.href = targetPath;
+  }, 800);
 }
+
+  // ── 발소리 재생 ──
+  const snd = new Audio('sound/footstep.mp3');
+  snd.volume = 0.8;
+  snd.play().catch(()=>{});
 
 /* ── 탈출 팝업 ── */
 function openEsc() {
