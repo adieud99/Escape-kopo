@@ -12,7 +12,8 @@
 
     <!-- 쿨러 핫스팟 -->
     <div
-        class="hotspot"
+        class="hotspot coller-on"
+        id="cooler-hotspot"
         style="left:57%; top:34%; width:5%; height:5%;"
         onclick="cool()"
         title="쿨러"
@@ -126,6 +127,18 @@
             <div class="success-sub">비밀번호가 맞습니다.<br />탈출 성공!</div>
             <button class="btn-restart" onclick="location.reload()">다시 시작</button>
         </div>
+        </div>
+
+        <!-- 화재 발생 팝업 -->
+        <div id="popup-fire">
+            <div class="fire-box">
+                <div class="fire-emoji">🔥</div>
+                <div class="fire-title">화재 발생!</div>
+                <div class="fire-desc">
+                    쿨러를 꺼버려 서버실에 화재가 발생했습니다.<br />
+                    시간 내에 쿨러를 켜지 않아 게임이 초기화됩니다.
+                </div>
+            </div>
         </div>
 
         <!-- 이동 토스트 -->

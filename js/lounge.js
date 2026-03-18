@@ -120,6 +120,94 @@ function closeImagePopup(event) {
     popupImage.src = "";
 }
 
+/* ── 쿨러 on/off + 화재 이벤트 (기본 ON 상태) ── */
+let coolerOn = true;         // 처음부터 켜져 있음
+let coolerTimer = null;
+let fireTriggered = false;
+
+const COOLER_LIMIT_MS = 5000;           // 5초
+const START_PAGE_PATH = "../index.html"; // 초기 화면 경로
+
+function cool() {
+  if (fireTriggered) return;
+
+  const coolerHotspot = document.getElementById("cooler-hotspot");
+  const guideMsg = document.getElementById("guide-msg");
+  const toast = document.getElementById("toast");
+
+  // ON -> OFF (위험 상태 시작)
+  if (coolerOn) {
+    coolerOn = false;
+
+    if (coolerHotspot) {
+      coolerHotspot.classList.remove("cooler-on");
+    }
+
+    if (guideMsg) {
+      guideMsg.textContent = "⚠ 쿨러가 꺼졌습니다. 5초 안에 다시 켜지 않으면 화재가 발생합니다.";
+    }
+
+    if (toast) {
+      toast.textContent = "⚠ 쿨러 OFF — 5초 안에 다시 켜야 합니다.";
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    clearTimeout(coolerTimer);
+    coolerTimer = setTimeout(() => {
+      triggerFireEvent();
+    }, COOLER_LIMIT_MS);
+
+    return;
+  }
+
+  // OFF -> ON (위기 해제)
+  coolerOn = true;
+  clearTimeout(coolerTimer);
+  coolerTimer = null;
+
+  if (coolerHotspot) {
+    coolerHotspot.classList.add("cooler-on");
+  }
+
+  if (guideMsg) {
+    guideMsg.textContent = "✅ 쿨러가 다시 작동합니다. 서버실이 안정화되었습니다.";
+  }
+
+  if (toast) {
+    toast.textContent = "❄ 쿨러 ON — 정상 상태로 복구되었습니다.";
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1800);
+  }
+}
+
+function triggerFireEvent() {
+  fireTriggered = true;
+  coolerOn = false;
+  coolerTimer = null;
+
+  const coolerHotspot = document.getElementById("cooler-hotspot");
+  const popupFire = document.getElementById("popup-fire");
+  const guideMsg = document.getElementById("guide-msg");
+
+  if (coolerHotspot) {
+    coolerHotspot.classList.remove("cooler-on");
+    coolerHotspot.classList.add("taken");
+  }
+
+  if (guideMsg) {
+    guideMsg.textContent = "🔥 쿨러 정지로 인해 서버실에 화재가 발생했습니다.";
+  }
+
+  if (popupFire) {
+    popupFire.classList.add("show");
+  }
+
+  setTimeout(() => {
+    window.location.href = START_PAGE_PATH;
+  }, 4000);
+}
+
 /* 정답 비밀번호 */
 const PW = "0126";
 

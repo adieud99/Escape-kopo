@@ -462,6 +462,53 @@ html, body {
     cursor: pointer;
 }
 
+/* 쿨러 ON 상태 표시 */
+.hotspot.cooler-on {
+    border-color: rgba(74, 222, 128, 1);
+    background: rgba(74, 222, 128, 0.22);
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.12);
+}
+
+/* 화재 발생 팝업 */
+#popup-fire {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 380;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#popup-fire.show {
+    display: flex;
+}
+
+.fire-box {
+    text-align: center;
+    animation: popIn .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.fire-emoji {
+    font-size: 100px;
+    margin-bottom: 24px;
+}
+
+.fire-title {
+    color: #ff5a36;
+    font-size: 46px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-shadow: 0 0 40px rgba(255, 80, 40, 0.7);
+}
+
+.fire-desc {
+    color: #ffb199;
+    font-size: 22px;
+    line-height: 1.7;
+}
+
 /* 탈출 팝업 */
 #popup-esc {
     display:none;
