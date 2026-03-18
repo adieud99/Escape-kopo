@@ -30,14 +30,14 @@ html, body {
 ════════════════════════════════════ */
 .hotspot {
   position:absolute;
-  cursor:url('../images/search_cursor.png') 64 64, pointer;
+  cursor:url('images/zoom1.png') 24 24, crosshair;
   z-index:50;
   border:3px solid transparent;
   border-radius:6px;
   transition:border-color .15s, background .15s;
 }
 .hotspot:hover {
-  border-color:rgb(65, 52, 0);
+  border-color:rgba(255,215,60,1);
   background:rgba(255,215,60,0.18);
   box-shadow:0 0 0 4px rgba(255,215,60,0.10);
 }
@@ -236,7 +236,7 @@ html, body {
   color:#f0d890;
   cursor:default;
 }
-.mroom.here:hover { background:rgba(200,147,58,.22); color:#4d0606; }
+.mroom.here:hover { background:rgba(200,147,58,.22); color:#f0d890; }
 .mdot {
   width:11px; height:11px;
   border-radius:50%;
@@ -313,7 +313,7 @@ html, body {
   transition:all .12s;
 }
 .btn-take  { background:#c8933a; color:#100e08; }
-.btn-take:hover { background:#a00000; }
+.btn-take:hover { background:#e0a044; }
 .btn-close { background:transparent; color:#888; border:2px solid #3a3a3a; }
 .btn-close:hover { color:#ddd; border-color:#c8933a; }
 
@@ -356,7 +356,7 @@ html, body {
   transition:border-color .15s, box-shadow .15s;
 }
 .pw-box:focus {
-  border-color:#ffa408;
+  border-color:#c8933a;
   box-shadow:0 0 0 3px rgba(200,147,58,.25);
 }
 #pw-msg {
@@ -414,7 +414,7 @@ html, body {
   padding:16px 48px; font-size:20px; font-weight:700;
   border-radius:10px; cursor:pointer; font-family:inherit;
 }
-.btn-restart:hover { background:linear-gradient(135deg,#e99300,#f0b850); }
+.btn-restart:hover { background:linear-gradient(135deg,#dfa848,#f0b850); }
 
 /* 이동 토스트 */
 #toast {

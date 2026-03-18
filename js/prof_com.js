@@ -1,4 +1,4 @@
-const PASSWORD ="9917";
+const PASSWORD = "1111";
 const DEFAULT_IMAGE = "../images/hyun_3.png";
 const SOLVED_IMAGE = "../images/hyun_3_open.png";
 const STORAGE_KEY = "computerSolved_prof";

@@ -4,8 +4,6 @@
     box-sizing: border-box;
 }
 
-
-
 body {
     margin: 0;
     overflow: hidden;
@@ -54,7 +52,7 @@ body {
 .trigger2:hover,
 .trigger3:hover,
 .trigger4:hover {
-    cursor: url('../images/search_cursor.png') 16 16, pointer;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
 }
 
 /* ── 트리거 1: 칠판 (청록) ── */
@@ -63,12 +61,12 @@ body {
     height: 100px;
     top: 350px;
     left: 350px;
-    background-color: rgba(7, 255, 172, 0.925);
-    border-color: rgba(127, 255, 212, 0);
+    background-color: rgba(127, 255, 212, 0.25);
+    border-color: rgba(127, 255, 212, 0.5);
 }
 .trigger:hover {
-    background-color: rgba(127, 255, 212, 1);
-    border-color: rgba(127, 255, 212, 0);
+    background-color: rgba(127, 255, 212, 0.45);
+    border-color: rgba(127, 255, 212, 1);
 }
 
 /* ── 트리거 2: 창문 (분홍) ── */
@@ -77,10 +75,13 @@ body {
     height: 100px;
     top: 250px;
     left: 900px;
-    background-color: rgba(255, 127, 127,1);
-    border-color: rgba(255, 127, 127, 0);
+    background-color: rgba(255, 127, 127, 0.25);
+    border-color: rgba(255, 127, 127, 0.5);
 }
-
+.trigger2:hover {
+    background-color: rgba(255, 127, 127, 0.45);
+    border-color: rgba(255, 127, 127, 1);
+}
 
 /* ── 트리거 3: 게시판 (하늘) ── */
 .trigger3 {
@@ -88,10 +89,13 @@ body {
     height: 100px;
     top: 180px;
     left: 1350px;
-    background-color: rgba(0, 242, 255,1);
-    border-color: rgba(0, 242, 255, 0);
+    background-color: rgba(0, 242, 255, 0.20);
+    border-color: rgba(0, 242, 255, 0.5);
 }
-
+.trigger3:hover {
+    background-color: rgba(0, 242, 255, 0.40);
+    border-color: rgba(0, 242, 255, 1);
+}
 
 /* ── 트리거 4: 시계 (빨강) ── */
 .trigger4 {
@@ -99,11 +103,41 @@ body {
     height: 80px;
     top: 180px;
     left: 1260px;
-    background-color: rgba(255, 0, 0, 1);
-    border-color: rgba(255, 0, 0, 0);
+    background-color: rgba(255, 0, 0, 0.25);
+    border-color: rgba(255, 0, 0, 0.5);
+}
+.trigger4:hover {
+    background-color: rgba(255, 0, 0, 0.45);
+    border-color: rgba(255, 0, 0, 1);
 }
 
+/* ── 트리거 m1: 종이 (주황) ── 
+.m1 {
+  width: 80px;
+  height: 80px;
+  top: 180px;
+  left: 1260px;
+  background-color: rgba(255, 132, 0, 0.25);
+  border-color: rgba(255, 0, 0, 0.5);
+}
+.m1 {
+  background-color: rgba(255, 0, 0, 0.45);
+  border-color: rgba(255, 0, 0, 1);
+}
 
+/* ── 트리거 m2: 찌그러진종이 (핑크) ── 
+.m2 {
+  width: 80px;
+  height: 80px;
+  top: 180px;
+  left: 1260px;
+  background-color: rgba(255, 0, 183, 0.25);
+  border-color: rgba(255, 0, 0, 0.5);
+}
+.m2 {
+  background-color: rgba(255, 0, 0, 0.45);
+  border-color: rgba(255, 0, 0, 1);
+}
 /* ── 모니터 오버레이 ── */
 .monitor {
     position: fixed;
@@ -208,8 +242,8 @@ body {
     transform: scale(1.08);
 }
 /* ════════════════════════════════════
-    하단 인벤토리 바  (2줄 × 10칸)
-    높이는 scene 1080px 기준 ~130px
+   하단 인벤토리 바  (2줄 × 10칸)
+   높이는 scene 1080px 기준 ~130px
 ════════════════════════════════════ */
 #inventory {
   position:absolute;
@@ -701,20 +735,20 @@ body {
 }
 
 .paper_trigger {
-    left: 700px;
-    top: 450px;
+    left: 680px;
+    top: 380px;
     width: 120px;
     height: 100px;
-    background: rgba(255, 0, 0, 0);
+    background: rgba(255, 0, 0, 0.4);
     border: 2px solid yellow;
 }
 
 .notebook_trigger {
-    left: 930px;
-    top: 550px;
+    left: 880px;
+    top: 470px;
     width: 260px;
     height: 170px;
-    background: rgba(0, 0, 255, 0);
+    background: rgba(0, 0, 255, 0.4);
     border: 2px solid yellow;
 }
 
@@ -729,9 +763,4 @@ body {
 }
 .desk_popup.show {
     display: flex;
-}
-
-/* 마우스 커서 변경 */
-.desk_trigger:hover {
-    cursor: url('../images/search_cursor.png') 64 64, pointer;
 }
