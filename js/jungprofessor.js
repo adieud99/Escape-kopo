@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>escape kopo</title>
-</head>
-<body>
-<script>
 /* ── 16:9 letterbox ── */
 const scene = document.getElementById('scene');
 const DW=1920, DH=1080;
@@ -151,6 +143,3 @@ function tryEscape(){
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ closePopup(); closeEsc(); }
 });
-</script>
-</body>
-</html>
