@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>ESCAPE KOPO</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Black+Han+Sans&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --gold:#c8933a;
+  --gold-light:#f0d890;
+  --bg:#07060a;
+}
+html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); font-family:'Noto Serif KR',serif; }
+
+#scene {
+  position:absolute; top:0; left:0;
+  transform-origin:top left;
+  width:1920px; height:1080px;
+  overflow:hidden;
+}
+
+/* ══ 전체 배경 (순수 검정) ══ */
+#bg {
+  position:absolute; inset:0; z-index:0;
+  background:#07060a;
+}
+
+/* ══ 왼쪽 사진 패널 ══ */
+#photo-panel {
+  position:absolute;
+  left:0; top:0;
+  width:900px; height:100%;
+  z-index:5;
+  overflow:hidden;
+}
+#photo-panel img {
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:center;
+  filter:brightness(0.7) saturate(0.85);
+}
+/* 오른쪽 페이드 */
+#photo-panel::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(90deg,
+    rgba(7,6,10,0) 0%,
+    rgba(7,6,10,0) 55%,
+    rgba(7,6,10,0.75) 80%,
+    rgba(7,6,10,1) 100%);
+}
+/* 상하 비네팅 */
+#photo-panel::before {
+  content:'';
+  position:absolute; inset:0; z-index:1;
+  background:
+    linear-gradient(180deg,rgba(7,6,10,0.45) 0%,transparent 15%,transparent 85%,rgba(7,6,10,0.55) 100%);
+}
+/* 사진 위 레이블 */
+#photo-label {
+  position:absolute;
+  bottom:48px; left:48px;
+  z-index:10;
+  color:rgba(200,147,58,0.5);
+  font-size:12px;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  animation:fadeIn 2s ease both;
+  animation-delay:0.8s;
+}
+
+/* ══ 세로 구분선 ══ */
+#divider {
+  position:absolute;
+  left:880px; top:80px;
+  width:1px; height:calc(100% - 160px);
+  background:linear-gradient(180deg,
+    transparent 0%,
+    rgba(200,147,58,.7) 20%,
+    rgba(200,147,58,.9) 50%,
+    rgba(200,147,58,.7) 80%,
+    transparent 100%);
+  z-index:20;
+}
+#divider::before {
+  content:''; position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:8px; height:8px;
+  background:var(--gold);
+  border-radius:50%;
+  box-shadow:0 0 20px var(--gold);
+}
+
+/* ══ 오른쪽 콘텐츠 ══ */
+#right-area {
+  position:absolute;
+  left:920px; top:0;
+  right:0; height:100%;
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0 80px 0 60px;
+}
+.subtitle-top {
+  color:rgba(200,147,58,0.65);
+  font-size:14px;
+  letter-spacing:7px;
+  text-transform:uppercase;
+  margin-bottom:22px;
+  animation:fadeUp 1s ease both;
+  animation-delay:0.2s;
+}
+#main-title {
+  font-family:'Black Han Sans', sans-serif;
+  font-size:108px;
+  color:#fff;
+  line-height:0.88;
+  letter-spacing:-2px;
+  margin-bottom:10px;
+  animation:fadeUp 1s ease both;
+  animation-delay:0.4s;
+}
+#main-title .accent {
+  color:var(--gold);
+  text-shadow:0 0 60px rgba(200,147,58,0.45);
+  display:block;
+}
+.subtitle-bottom {
+  color:rgba(240,216,144,0.5);
+  font-size:17px;
+  letter-spacing:3px;
+  margin-bottom:64px;
+  animation:fadeUp 1s ease both;
+  animation-delay:0.6s;
+  min-height:26px;
+}
+
+/* ══ 게임 시작 버튼 ══ */
+#btn-start {
+  display:inline-flex;
+  align-items:center;
+  gap:16px;
+  background:transparent;
+  border:2px solid var(--gold);
+  border-radius:4px;
+  color:var(--gold-light);
+  font-family:'Black Han Sans', sans-serif;
+  font-size:26px;
+  letter-spacing:6px;
+  padding:20px 52px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:all .25s;
+  align-self:flex-start;
+  animation:fadeUp 1s ease both;
+  animation-delay:0.85s;
+  margin-bottom:28px;
+}
+#btn-start::before {
+  content:'';
+  position:absolute; inset:0;
+  background:var(--gold);
+  transform:translateX(-102%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  z-index:0;
+}
+#btn-start:hover::before { transform:translateX(0); }
+#btn-start:hover { color:#0a0810; box-shadow:0 0 40px rgba(200,147,58,0.45); }
+#btn-start:active { transform:scale(0.97); }
+#btn-start span { position:relative; z-index:1; }
+.start-arrow {
+  position:relative; z-index:1;
+  font-size:20px;
+  transition:transform .25s;
+}
+#btn-start:hover .start-arrow { transform:translateX(6px); }
+
+.hint-text {
+  color:rgba(255,255,255,0.18);
+  font-size:13px;
+  letter-spacing:2px;
+  animation:fadeUp 1s ease both;
+  animation-delay:1.05s;
+  min-height:20px;
+}
+
+/* ══ 음악 버튼 ══ */
+#btn-music {
+  position:absolute;
+  top:32px; right:36px;
+  z-index:200;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:rgba(0,0,0,.65);
+  border:1.5px solid rgba(200,147,58,.4);
+  border-radius:30px;
+  color:rgba(200,147,58,.8);
+  font-family:'Noto Serif KR',serif;
+  font-size:14px;
+  letter-spacing:1px;
+  padding:10px 20px;
+  cursor:pointer;
+  transition:all .2s;
+  animation:fadeIn 2s ease both;
+  animation-delay:1.3s;
+}
+#btn-music:hover {
+  background:rgba(200,147,58,.12);
+  border-color:var(--gold);
+  color:var(--gold-light);
+  box-shadow:0 0 14px rgba(200,147,58,.2);
+}
+.music-icon { font-size:17px; transition:transform .3s; }
+#btn-music:hover .music-icon { transform:scale(1.2); }
+
+/* ══ 코너 장식 ══ */
+.corner { position:absolute; z-index:25; }
+.corner.tr { top:36px; right:36px; width:50px; height:50px;
+  border-top:2px solid rgba(200,147,58,.5); border-right:2px solid rgba(200,147,58,.5); }
+.corner.bl { bottom:36px; left:36px; width:50px; height:50px;
+  border-bottom:2px solid rgba(200,147,58,.2); border-left:2px solid rgba(200,147,58,.2); }
+
+/* ══ 하단 바 ══ */
+#bottom-bar {
+  position:absolute; bottom:0; left:0; right:0; height:3px; z-index:20;
+  background:linear-gradient(90deg,transparent 0%,rgba(200,147,58,.7) 30%,rgba(200,147,58,.95) 50%,rgba(200,147,58,.7) 70%,transparent 100%);
+}
+
+/* ══ 스캔라인 ══ */
+#scanlines {
+  position:absolute; inset:0; z-index:90; pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.03) 3px,rgba(0,0,0,.03) 4px);
+}
+
+/* ══ 파티클 ══ */
+.particle {
+  position:absolute; border-radius:50%; pointer-events:none; z-index:15;
+  background:rgba(200,147,58,.55);
+  animation:pdrift linear infinite;
+}
+@keyframes pdrift {
+  0%   { opacity:0; transform:translateY(0) translateX(0); }
+  10%  { opacity:1; }
+  90%  { opacity:.5; }
+  100% { opacity:0; transform:translateY(-280px) translateX(var(--dx)); }
+}
+
+/* ══ 애니메이션 ══ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+</style>
+</head>
+<body>
+<div id="scene">
+  <div id="bg"></div>
+  <div id="scanlines"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div id="bottom-bar"></div>
+
+  <!-- ════ 왼쪽 사진 패널 (images/pro1.png) ════ -->
+  <div id="photo-panel">
+    <img src="../images/class.png" alt="메인화면">
+    <div id="photo-label">KOREA POLYTECHNICS — RESEARCH LAB</div>
+  </div>
+
+  <!-- ════ 세로 구분선 ════ -->
+  <div id="divider"></div>
+
+  <!-- ════ 오른쪽: 타이틀 + 버튼 ════ -->
+  <div id="right-area">
+    <div class="subtitle-top">KOREA POLYTECHNICS · 2026</div>
+
+    <div id="main-title">
+      ESCAPE<span class="accent">KOPO</span>
+    </div>
+
+    <!-- ↓ 타이틀 아래 한 줄 소개문구 넣는 곳 -->
+    <div class="subtitle-bottom">김연동,김정현,노현주,정아영</div>
+
+    <button id="btn-start" onclick="startGame()">
+      <span>게임 시작</span>
+      <span class="start-arrow">→</span>
+    </button>
+
+    <!-- ↓ 게임 시작 버튼 아래 작은 힌트/설명 넣는 곳 -->
+    <div class="hint-text"><!-- 여기에 짧은 안내 문구를 입력하세요 --></div>
+  </div>
+
+  <!-- ════ 음악 토글 ════ -->
+  <button id="btn-music" onclick="toggleMusic()">
+    <span class="music-icon" id="music-icon">🔊</span>
+    <span id="music-label">배경음악</span>
+  </button>
+
+  <div id="particles"></div>
+
+  <audio id="bgm" loop>
+    <source src="../sound/basic_music.mp3">
+    <source src="../sound/basic_music.mp3">
+  </audio>
+</div>
+
+<script>
+/* ── 씬 리사이즈 ── */
+const scene = document.getElementById('scene');
+const DW=1920, DH=1080;
+function resize(){
+  const s=Math.min(innerWidth/DW,innerHeight/DH);
+  const ox=(innerWidth-DW*s)/2, oy=(innerHeight-DH*s)/2;
+  scene.style.transform=`translate(${ox}px,${oy}px) scale(${s})`;
+}
+resize(); addEventListener('resize',resize);
+
+/* ── 파티클 ── */
+const pCon = document.getElementById('particles');
+for(let i=0;i<22;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  const x=920+Math.random()*960, y=200+Math.random()*700;
+  const dur=6+Math.random()*10, delay=Math.random()*8;
+  const dx=(Math.random()-.5)*100, size=1+Math.random()*2;
+  p.style.cssText=`left:${x}px;top:${y}px;width:${size}px;height:${size}px;--dx:${dx}px;animation-duration:${dur}s;animation-delay:-${delay}s;`;
+  pCon.appendChild(p);
+}
+
+/* ── 배경음악 ── */
+const bgm=document.getElementById('bgm');
+let muted=false;
+addEventListener('click',()=>{
+  if(bgm.paused&&!muted){ bgm.volume=0.35; bgm.play().catch(()=>{}); }
+},{once:true});
+
+function toggleMusic(){
+  muted=!muted;
+  const icon=document.getElementById('music-icon');
+  const label=document.getElementById('music-label');
+  const btn=document.getElementById('btn-music');
+  if(muted){
+    bgm.pause();
+    icon.textContent='🔇'; label.textContent='음소거';
+    btn.style.borderColor='rgba(255,255,255,0.2)';
+    btn.style.color='rgba(255,255,255,0.3)';
+  } else {
+    bgm.volume=0.35; bgm.play().catch(()=>{});
+    icon.textContent='🔊'; label.textContent='배경음악';
+    btn.style.borderColor=''; btn.style.color='';
+  }
+}
+
+/* ── 게임 시작 ── */
+function startGame(){
+  scene.style.transition='opacity 0.6s ease';
+  scene.style.opacity='0';
+  setTimeout(()=>{ window.location.href='professor_room.html'; },600);
+}
+</script>
+</body>
+</html>
