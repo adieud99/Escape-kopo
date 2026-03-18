@@ -30,7 +30,7 @@ const ITEMS = {
     desc:'키보드 밑에 끼워진 작은 메모지.\n\n「  0  」\n\n이 숫자가 비밀번호의 단서일까…'
   },
   necklace:{
-    t:'i', icon:'images/pro2.jpg', inv:'images/pro2.jpg',
+    t:'i', icon:'../images/pro2.jpg', inv:'../images/pro2.jpg',
     name:'교수증',
     desc:'파티션에 걸린 목걸이.\n안에 교수증이 들어있다.\n정원치 교수님의 얼굴과 이름이 적혀있다.'
   }
