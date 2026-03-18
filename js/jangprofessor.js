@@ -38,12 +38,28 @@ const ITEMS = {
     desc: "모니터를 켰는데 배경화면이 조금 이상하다.\n.세모, 네모, 동그라미, 육각형\n왜 동그라미만 색깔이 다를까?",
   },
 
-  plant: {
-    t: "e",
-    icon: "🪨",
-    inv: "🪨",
-    name: "교수님의 애완돌",
-    desc: '매끄럽고 동그란 돌멩이.\n교수님이 화분 옆에 소중히 올려두었다.\n뒷면에 작게 "행운을 빌어" 라고 새겨져 있다.',
+  severKey: {
+    t: "i",
+    icon: "../images/serverKey.png",
+    inv: "../images/serverKey.png",
+    name: "서버실 카드키",
+    desc: "서버실 카드키",
+  },
+
+  Shelf: {
+    t: "i",
+    icon: "../images/confidential.png",
+    inv: "../images/confidential.png",
+    name: "confidential",
+    desc: "교수님의 기밀문서.\n뭐라쓰지....",
+  },
+
+  locker: {
+    t: "i",
+    icon: "../images/N.png",
+    inv: "../images/N.png",
+    name: "나침반",
+    desc: "...",
   },
 };
 const PW = "0162";
