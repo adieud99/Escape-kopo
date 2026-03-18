@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="../css/jungprofessor.css" />
 </head>
 <body>
-<div id="scene">
-  <!-- 배경 이미지는 HTML에서 직접 넣기 -->
-  <img src="../images/pro1.png" alt="정원치 교수님 연구실" class="scene-image" />
+<div class="h_img">
+  <div class="img_box">
+    <img src="../images/pro1.png" alt="정원치 교수님 연구실" />
 
 
   <!-- ═══════════════════════════════════════
@@ -20,7 +20,7 @@
 
   <!-- 화분 (왼쪽 창가 식물) -->
   <div class="hotspot"
-        style="left:9.77%;top:23.73%;width:4.56%;height:13.31%"
+        style="left:15.77%;top:23.73%;width:3.56%;height:13.31%"
         onclick="openItem('plant')"></div>
 
   <!-- 키보드 아래 쪽지 -->
@@ -30,7 +30,7 @@
 
   <!-- 사원증 (오른쪽 파티션) -->
   <div class="hotspot"
-       style="left:65.43%;top:34.14%;width:3.58%;height:21.41%"
+       style="left:68.23%;top:40.14%;width:3.58%;height:21.41%"
        onclick="openItem('necklace')"></div>
 
 
@@ -116,8 +116,9 @@
     </div>
   </div>
 
-  <div id="toast"></div>
-</div>
+<div id="toast"></div>
+  </div>  <!-- img_box 닫기 -->
+</div>    <!-- h_img 닫기 -->
   <script src="../js/jungprofessor.js"></script>
 </body>
 </html>

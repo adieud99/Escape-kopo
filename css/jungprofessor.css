@@ -2,27 +2,37 @@
 
 html, body {
   width:100%; height:100%;
+  margin:0;
   overflow:hidden;
-  background:#080808;
+  background:#000;
   font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
 }
 
-#scene {
-  position:absolute;
-  top:0; left:0;
-  transform-origin:top left;
+/* ── 배경 컨테이너 ── */
+.h_img {
+  display:flex;
+  width:100vw;
+  height:100vh;
+  align-items:center;
+  justify-content:center;
+  background-color:#000;
 }
 
-.scene-image {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:1;
-    user-select:none;
-    pointer-events:none;
+.img_box {
+  position:relative;
+  line-height:0;
+  /* width/height 고정 제거 — 이미지 크기에 맞게 자동 */
+}
+
+.img_box > img {
+  max-width:100vw;
+  max-height:100vh;
+  width:auto;
+  height:auto;
+  display:block;
+  user-select:none;
+  -webkit-user-drag:none;
+  pointer-events:none;
 }
 
 /* ════════════════════════════════════
@@ -37,9 +47,9 @@ html, body {
   transition:border-color .15s, background .15s;
 }
 .hotspot:hover {
-  border-color:rgb(65, 52, 0);
-  background:rgba(255,215,60,0.18);
-  box-shadow:0 0 0 4px rgba(255,215,60,0.10);
+  border-color:transparent;
+  background:transparent;
+  box-shadow:none;
 }
 .hotspot.taken {
   opacity:.15;
@@ -47,8 +57,7 @@ html, body {
 }
 
 /* ════════════════════════════════════
-   하단 인벤토리 바  (2줄 × 10칸)
-   높이는 scene 1080px 기준 ~130px
+   왼쪽 인벤토리
 ════════════════════════════════════ */
 #inventory {
   position:absolute;
@@ -193,7 +202,6 @@ html, body {
   background:rgba(90,159,192,.20);
   box-shadow:0 0 18px rgba(90,159,192,.3);
 }
-
 #map-panel {
   display:none;
   position:absolute;
@@ -236,7 +244,7 @@ html, body {
   color:#f0d890;
   cursor:default;
 }
-.mroom.here:hover { background:rgba(200,147,58,.22); color:#4d0606; }
+.mroom.here:hover { background:rgba(200,147,58,.22); color:#f0d890; }
 .mdot {
   width:11px; height:11px;
   border-radius:50%;
@@ -316,12 +324,10 @@ html, body {
 .btn-take:hover { background:#a00000; }
 .btn-close { background:transparent; color:#888; border:2px solid #3a3a3a; }
 .btn-close:hover { color:#ddd; border-color:#c8933a; }
-
-/* 이미 획득한 아이템 팝업: 획득 버튼 숨김 */
 #popup.view-mode .btn-take { display:none; }
 
 /* ════════════════════════════════════
-   탈출 팝업 — 비밀번호
+   탈출 팝업
 ════════════════════════════════════ */
 #popup-esc {
   display:none;

@@ -1,21 +1,13 @@
-/* ── 16:9 letterbox ── */
-const scene = document.getElementById('scene');
-const DW=1920, DH=1080;
-function resize(){
-  const s=Math.min(innerWidth/DW, innerHeight/DH);
-  const ox=(innerWidth-DW*s)/2, oy=(innerHeight-DH*s)/2;
-  scene.style.cssText=`width:${DW}px;height:${DH}px;transform:translate(${ox}px,${oy}px) scale(${s})`;
-}
-resize(); addEventListener('resize',resize);
-
 /* ── 인벤토리 슬롯 20개 생성 ── */
-const grid = document.getElementById('inv-grid');
-for(let i=0;i<20;i++){
-  const d=document.createElement('div');
-  d.className='inv-slot';
-  d.id='s'+i;
-  grid.appendChild(d);
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('inv-grid');
+  for(let i=0;i<20;i++){
+    const d=document.createElement('div');
+    d.className='inv-slot';
+    d.id='s'+i;
+    grid.appendChild(d);
+  }
+});
 
 /* ── 아이템 데이터 ── */
 const ITEMS = {
