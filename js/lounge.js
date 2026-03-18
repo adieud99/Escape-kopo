@@ -285,6 +285,7 @@ function goRoom(roomName) {
   const roomPaths = {
     "강의실": "./classroom.html",
     "정원치 교수님 연구실": "./jungprofessor.html",
+    "장석주 교수님 연구실": "./jangprofessorMain.html",
     "라운지": "./lounge.html",
     "서버실": "./server-room.html"
   };
