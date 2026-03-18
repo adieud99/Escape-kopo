@@ -100,6 +100,26 @@ function goSofa() {
     window.location.href = "./sofa.html";
 }
 
+/* 사진 팝업 */
+
+function openImagePopup(imagePath) {
+    const popup = document.getElementById("image-popup");
+    const popupImage = document.getElementById("popup-image");
+
+    popupImage.src = imagePath;
+    popup.classList.add("show");
+}
+
+function closeImagePopup(event) {
+    if (event && event.target !== event.currentTarget) return;
+
+    const popup = document.getElementById("image-popup");
+    const popupImage = document.getElementById("popup-image");
+
+    popup.classList.remove("show");
+    popupImage.src = "";
+}
+
 /* 정답 비밀번호 */
 const PW = "0126";
 

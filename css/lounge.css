@@ -411,6 +411,57 @@ html, body {
 
 #popup.view-mode .btn-take { display:none; }
 
+/* 사진 팝업 */
+#image-popup {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+}
+
+#image-popup.show {
+    display: block;
+}
+
+.image-popup-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-popup-box {
+    position: relative;
+    max-width: 80%;
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#popup-image {
+    max-width: 100%;
+    max-height: 75vh;
+    border: 2px solid #c8933a;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    background: #111;
+}
+
+.image-popup-close {
+    margin-top: 16px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    background: #c8933a;
+    color: #100e08;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 /* 탈출 팝업 */
 #popup-esc {
     display:none;

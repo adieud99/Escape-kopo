@@ -18,14 +18,24 @@
         title="쿨러"
     ></div>
 
-    <!-- 기록 -->
+
+    <!-- 사진 팝업 -->
     <div
-        class="hotspot"
-        style="left:28%; top:28%; width:6%; height:10%;"
-        onclick="openItem('serverNote')"
-        title="서버실 메모"
+    class="hotspot"
+    style="left:29%; top:30%; width:5%; height:8%;"
+    onclick="openImagePopup('../images/sticker.jpg')"
+    title="스티커"
     ></div>
 
+    <div id="image-popup">
+    <div class="image-popup-backdrop" onclick="closeImagePopup(event)">
+        <div class="image-popup-box">
+            <img id="popup-image" src="" alt="확대 이미지" />
+            <button class="image-popup-close" onclick="closeImagePopup()">닫기</button>
+        </div>
+    </div>
+</div>
+    
 
     <!-- 왼쪽 인벤토리 -->
     <div id="inventory">
