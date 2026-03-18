@@ -208,6 +208,10 @@ function triggerFireEvent() {
   }, 3000);
 }
 
+function goBack() {
+    location.href = "lounge.html";
+}
+
 /* 정답 비밀번호 */
 const PW = "0126";
 

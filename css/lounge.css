@@ -509,6 +509,30 @@ html, body {
     line-height: 1.7;
 }
 
+.back_btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: bold;
+
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: 2px solid #888;
+  border-radius: 8px;
+  cursor: pointer;
+
+  z-index: 100;
+  transition: all 0.15s;
+}
+
+.back_btn:hover {
+  background: rgba(0,0,0,0.9);
+  border-color: #c8933a;
+}
+
 /* 탈출 팝업 */
 #popup-esc {
     display:none;
