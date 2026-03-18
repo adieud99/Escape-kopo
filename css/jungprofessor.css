@@ -30,7 +30,7 @@ html, body {
 ════════════════════════════════════ */
 .hotspot {
   position:absolute;
-  cursor:url('../images/search_cursor.png') 64 64, pointer;
+  cursor:url('../images/search_cursor.png') 32 32, pointer;
   z-index:50;
   border:3px solid transparent;
   border-radius:6px;

@@ -54,52 +54,51 @@ body {
 .trigger2:hover,
 .trigger3:hover,
 .trigger4:hover {
-    cursor: url('../images/search_cursor.png') 16 16, pointer;
+    cursor: url('../images/search_cursor.png') 32 32, pointer;
 }
 
 /* ── 트리거 1: 칠판 (청록) ── */
 .trigger {
-    width: 300px;
-    height: 100px;
-    top: 350px;
-    left: 350px;
-    background-color: rgba(7, 255, 172, 0.925);
+    position: absolute;
+    width: 15%;
+    height: 17%;
+    top: 38%;
+    left: 28%;
     border-color: rgba(127, 255, 212, 0);
 }
 .trigger:hover {
-    background-color: rgba(127, 255, 212, 1);
     border-color: rgba(127, 255, 212, 0);
 }
 
 /* ── 트리거 2: 창문 (분홍) ── */
 .trigger2 {
-    width: 150px;
-    height: 100px;
-    top: 250px;
-    left: 900px;
-    background-color: rgba(255, 127, 127,1);
+    width: 8%;
+    height: 10%;
+    top: 31%;
+    left: 58%;
     border-color: rgba(255, 127, 127, 0);
 }
 
 
 /* ── 트리거 3: 게시판 (하늘) ── */
 .trigger3 {
-    width: 150px;
-    height: 100px;
-    top: 180px;
-    left: 1350px;
-    background-color: rgba(0, 242, 255,1);
+    width: 9%;
+    height: 13%;
+    top: 20%;
+    left: 88%;
+
     border-color: rgba(0, 242, 255, 0);
 }
 
 
 /* ── 트리거 4: 시계 (빨강) ── */
 .trigger4 {
-    width: 80px;
-    height: 80px;
-    top: 180px;
-    left: 1260px;
-    background-color: rgba(255, 0, 0, 1);
+    width: 3%;
+    height: 6%;
+    top: 25%;
+    left: 84%;
+    
+
     border-color: rgba(255, 0, 0, 0);
 }
 
@@ -701,21 +700,21 @@ body {
 }
 
 .paper_trigger {
-    left: 700px;
-    top: 450px;
-    width: 120px;
-    height: 100px;
+    left: 45%;
+    top: 52%;
+    width: 10%;
+    height: 12%;
     background: rgba(255, 0, 0, 0);
-    border: 2px solid yellow;
+
 }
 
 .notebook_trigger {
-    left: 930px;
-    top: 550px;
-    width: 260px;
-    height: 170px;
+    left: 58%;
+    top: 67%;
+    width: 25%;
+    height: 22%;
     background: rgba(0, 0, 255, 0);
-    border: 2px solid yellow;
+
 }
 
 .desk_popup {
@@ -733,5 +732,5 @@ body {
 
 /* 마우스 커서 변경 */
 .desk_trigger:hover {
-    cursor: url('../images/search_cursor.png') 64 64, pointer;
+    cursor: url('../images/search_cursor.png') 32 32, pointer;
 }

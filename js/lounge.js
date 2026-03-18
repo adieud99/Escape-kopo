@@ -148,18 +148,18 @@ function cool() {
     }
 
     if (toast) {
-      toast.textContent = "⚠ 쿨러 OFF — 5초 안에 다시 켜야 합니다.";
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 1800);
+        toast.textContent = "⚠ 쿨러 OFF — 5초 안에 다시 켜야 합니다.";
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
     clearTimeout(coolerTimer);
     coolerTimer = setTimeout(() => {
-      triggerFireEvent();
+        triggerFireEvent();
     }, COOLER_LIMIT_MS);
 
     return;
-  }
+    }
 
   // OFF -> ON (위기 해제)
   coolerOn = true;

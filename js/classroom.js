@@ -203,7 +203,7 @@ document.addEventListener('keydown',e=>{
 
 
 /* prof_com */
-const PASSWORD = "1111";
+const PASSWORD = "9917";
 
 function moveNext(index) {
     const current = document.getElementById("p" + index);
