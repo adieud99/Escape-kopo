@@ -204,8 +204,8 @@ function triggerFireEvent() {
   }
 
   setTimeout(() => {
-    window.location.href = START_PAGE_PATH;
-  }, 4000);
+    window.location.href = './mainscreen.html';
+  }, 3000);
 }
 
 /* 정답 비밀번호 */
