@@ -139,11 +139,11 @@ let tt;
 
 function goRoom(roomName) {
   const roomPaths = {
-    강의실: "./classroom.html",
+    "강의실": "./classroom.html",
+    "장석주 교수님 연구실": "./jangprofessorMain.html",
     "정원치 교수님 연구실": "./jungprofessor.html",
-    "장석주 교수님 연구실": "./jangprofessor.html",
-    라운지: "./lounge.html",
-    서버실: "./server-room.html",
+    "라운지": "./lounge.html",
+    "서버실": "./server-room.html"
   };
 
   document.getElementById("map-panel").classList.remove("open");
