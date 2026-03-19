@@ -94,3 +94,13 @@ document.addEventListener("keydown", function (e) {
         checkPassword();
     }
 });
+
+let audioCtx = null;
+
+document.addEventListener('click', () => {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  
+  const snd = new Audio('../sound/click.mp3');
+  snd.volume = 0.5;
+  snd.play().catch(()=>{});
+});
