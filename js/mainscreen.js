@@ -48,7 +48,7 @@ function toggleMusic(){
 function startGame(){
   scene.style.transition='opacity 0.6s ease';
   scene.style.opacity='0';
-  setTimeout(()=>{ window.location.href='classroom.html'; },600);
+  setTimeout(()=>{ window.location.href='intro.html'; },600);
 }
 
 let audioCtx = null;
