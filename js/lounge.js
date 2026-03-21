@@ -1,353 +1,431 @@
-/* ── 인벤토리 슬롯 20개 생성 ── */
-const grid = document.getElementById("inv-grid");
-for (let i = 0; i < 20; i++) {
-    const d = document.createElement("div");
-    d.className = "inv-slot";
-    d.id = "s" + i;
-    grid.appendChild(d);
-}
+const PW = "0126";
 
-/* ── 아이템 데이터 ── */
-const ITEMS = {
-    sofaNote: {
-        t: "e",
-        icon: "📝",
-        inv: "📝",
-        name: "찢어진 메모",
-        desc:
-        "소파 밑에 끼어 있던 작은 메모.\n\n" +
-        "「 ...110... 」\n\n" +
-        "정체 모를 숫자가 적혀 있다.\n탈출 비밀번호와 관련이 있어 보인다."
-    },
+let cur = null;
+let tt = null;
 
-    serverNote: {
-        t: "e",
-        icon: "📝",
-        inv: "📝",
-        name: "메모 모음",
-        desc:
-        "서버실 벽에 붙어있는 메모.\n\n" +
-        "「 ...... 」\n\n" +
-        " ~~~ 가 적혀 있다.\n탈출 비밀번호와 관련이 있어 보인다."
-    },
+/* 라운지에서 쓰는 아이템 id 목록 */
+const LOUNGE_ITEMS = ["sofaNote", "serverNote", "locker415", "locker417", "letter"];
 
-    locker415: {
-        t: "e",
-        icon: "📚",
-        inv: "📚",
-        name: "쌓여있는 책",
-        desc:
-        "지저분한 사물함 속 쌓여있는 책.\n\n" +
-        "「 ...110... 」\n\n" +
-        "정체 모를 숫자가 적혀 있다.\n탈출 비밀번호와 관련이 있어 보인다."
-    },
-
-    locker417: {
-        t: "e",
-        icon: "🥢🥄",
-        inv: "🥢🥄",
-        name: "수저포크",
-        desc:
-        "수저와 포크...\n\n" +
-        "학생들이 배달 음식을 많이 시켜먹은 듯하다.\n이건 필요없겠지?"
-    },
-
-    letter: {
-        t: "e",
-        icon: "✉️",
-        inv: "✉️",
-        name: "편지",
-        desc:
-        "이 편지는 영국에서 최초로 시작되어...\n\n" +
-        "에이씨...\n7통을 보내야 한다고?"
-    },
-
-/* 서버실 카드키 
-    serverCard: {
-        t: "e",
-        icon: "🪪",
-        inv: "🪪",
-        name: "카드키",
-        desc:
-        "발견된 카드키.\n\n" +
-        "어딘가 잠긴 곳이 있을 것 같다.\n잠긴 곳이 어디였지?"
-    } */
-};
-
-/* ── 사물함 상세 페이지 이동 ── */
+/* 상세 페이지 이동 */
 function goLocker() {
+  playClickSound();
+  setTimeout(() => {
     window.location.href = "./locker.html";
+  }, 300);
 }
 
-/* ── 소파 상세 페이지 이동 ── */
 function goSofa() {
+  playClickSound();
+  setTimeout(() => {
     window.location.href = "./sofa.html";
-}
-
-/* ── 사진 팝업 ── */
-function openImagePopup(imagePath) {
-    const popup = document.getElementById("image-popup");
-    const popupImage = document.getElementById("popup-image");
-
-    popupImage.src = imagePath;
-    popup.classList.add("show");
-}
-
-function closeImagePopup(event) {
-    if (event && event.target !== event.currentTarget) return;
-
-    const popup = document.getElementById("image-popup");
-    const popupImage = document.getElementById("popup-image");
-
-    popup.classList.remove("show");
-    popupImage.src = "";
-}
-
-/* ── 쿨러 on/off + 화재 이벤트 ── */
-let coolerOn = true;
-let coolerTimer = null;
-let fireTriggered = false;
-
-const COOLER_LIMIT_MS = 5000;
-
-function cool() {
-    if (fireTriggered) return;
-
-    const coolerHotspot = document.getElementById("cooler-hotspot");
-    const guideMsg = document.getElementById("guide-msg");
-    const toast = document.getElementById("toast");
-
-    // ON -> OFF (위험 상태 시작)
-    if (coolerOn) {
-        coolerOn = false;
-
-        if (coolerHotspot) coolerHotspot.classList.remove("cooler-on");
-        if (guideMsg) guideMsg.textContent = "⚠ 쿨러가 꺼졌습니다. 5초 안에 다시 켜지 않으면 화재가 발생합니다.";
-        if (toast) {
-            toast.textContent = "⚠ 쿨러 OFF — 5초 안에 다시 켜야 합니다.";
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 1800);
-        }
-
-        clearTimeout(coolerTimer);
-        coolerTimer = setTimeout(() => {
-            triggerFireEvent();
-        }, COOLER_LIMIT_MS);
-
-        return;
-    }
-
-    // OFF -> ON (위기 해제)
-    coolerOn = true;
-    clearTimeout(coolerTimer);
-    coolerTimer = null;
-
-    if (coolerHotspot) coolerHotspot.classList.add("cooler-on");
-    if (guideMsg) guideMsg.textContent = "✅ 쿨러가 다시 작동합니다. 서버실이 안정화되었습니다.";
-    if (toast) {
-        toast.textContent = "❄ 쿨러 ON — 정상 상태로 복구되었습니다.";
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 1800);
-    }
-}
-
-function triggerFireEvent() {
-    fireTriggered = true;
-    coolerOn = false;
-    coolerTimer = null;
-
-    const coolerHotspot = document.getElementById("cooler-hotspot");
-    const popupFire = document.getElementById("popup-fire");
-    const guideMsg = document.getElementById("guide-msg");
-
-    if (coolerHotspot) {
-        coolerHotspot.classList.remove("cooler-on");
-        coolerHotspot.classList.add("taken");
-    }
-    if (guideMsg) guideMsg.textContent = "🔥 쿨러 정지로 인해 서버실에 화재가 발생했습니다.";
-    if (popupFire) popupFire.classList.add("show");
-
-    setTimeout(() => {
-        window.location.href = './mainscreen.html';
-    }, 3000);
+  }, 300);
 }
 
 function goBack() {
+  playClickSound();
+  setTimeout(() => {
     location.href = "lounge.html";
+  }, 300);
 }
 
-/* ── 정답 비밀번호 ── */
-const PW = "0126";
+/* 이미지 팝업 */
+function openImagePopup(imagePath) {
+  playClickSound();
 
-/* ── [수정] cur, col 선언을 함수보다 위로 이동 ── */
-let cur = null;
-let col = [];
+  const popup = document.getElementById("image-popup");
+  const popupImage = document.getElementById("popup-image");
+  if (!popup || !popupImage) return;
 
-/* ── 아이템 팝업 열기 ── */
-function showPopup(id, viewOnly) {
-    const d = ITEMS[id];
-    document.getElementById('p-icon').innerHTML = d.t === 'i' ? `<img src="${d.icon}" alt="${d.name}">` : d.icon;
-    document.getElementById('p-title').textContent = d.name;
-    document.getElementById('p-desc').textContent = d.desc;
-    const popup = document.getElementById('popup');
-    if (viewOnly) {
-        popup.classList.add('view-mode');
-    } else {
-        popup.classList.remove('view-mode');
-        cur = id;
+  popupImage.src = imagePath;
+  popup.classList.add("show");
+}
+
+function closeImagePopup(event) {
+  if (event && event.target !== event.currentTarget) return;
+
+  playClickSound();
+
+  const popup = document.getElementById("image-popup");
+  const popupImage = document.getElementById("popup-image");
+  if (!popup || !popupImage) return;
+
+  popup.classList.remove("show");
+  popupImage.src = "";
+}
+
+/* 서버실 쿨러 */
+let coolerOn = true;
+let coolerTimer = null;
+let fireTriggered = false;
+const COOLER_LIMIT_MS = 5000;
+
+function cool() {
+  playClickSound();
+
+  if (fireTriggered) return;
+
+  const coolerHotspot = document.getElementById("cooler-hotspot");
+  const guideMsg = document.getElementById("guide-msg");
+  const toast = document.getElementById("toast");
+
+  if (coolerOn) {
+    coolerOn = false;
+
+    if (coolerHotspot) coolerHotspot.classList.remove("cooler-on");
+    if (guideMsg) {
+      guideMsg.textContent = "⚠ 쿨러가 꺼졌습니다. 5초 안에 다시 켜지 않으면 화재가 발생합니다.";
     }
-    popup.classList.add('show');
+    if (toast) {
+      toast.textContent = "⚠ 쿨러 OFF — 5초 안에 다시 켜야 합니다.";
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    clearTimeout(coolerTimer);
+    coolerTimer = setTimeout(() => {
+      triggerFireEvent();
+    }, COOLER_LIMIT_MS);
+
+    return;
+  }
+
+  coolerOn = true;
+  clearTimeout(coolerTimer);
+  coolerTimer = null;
+
+  if (coolerHotspot) coolerHotspot.classList.add("cooler-on");
+  if (guideMsg) guideMsg.textContent = "✅ 쿨러가 다시 작동합니다. 서버실이 안정화되었습니다.";
+  if (toast) {
+    toast.textContent = "❄ 쿨러 ON — 정상 상태로 복구되었습니다.";
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1800);
+  }
+}
+
+function triggerFireEvent() {
+  fireTriggered = true;
+  coolerOn = false;
+  coolerTimer = null;
+
+  const coolerHotspot = document.getElementById("cooler-hotspot");
+  const popupFire = document.getElementById("popup-fire");
+  const guideMsg = document.getElementById("guide-msg");
+
+  if (coolerHotspot) {
+    coolerHotspot.classList.remove("cooler-on");
+    coolerHotspot.classList.add("taken");
+  }
+  if (guideMsg) guideMsg.textContent = "🔥 쿨러 정지로 인해 서버실에 화재가 발생했습니다.";
+  if (popupFire) popupFire.classList.add("show");
+
+  setTimeout(() => {
+    window.location.href = "./mainscreen.html";
+  }, 3000);
+}
+
+/* 아이템 팝업 */
+function showPopup(id, viewOnly = false) {
+  const data = InventoryManager.getItemData(id);
+  if (!data) return;
+
+  const popup = document.getElementById("popup");
+  const icon = document.getElementById("p-icon");
+  const title = document.getElementById("p-title");
+  const desc = document.getElementById("p-desc");
+
+  if (!popup || !icon || !title || !desc) return;
+
+  icon.innerHTML =
+    data.t === "i"
+      ? `<img src="${data.icon}" alt="${data.name}">`
+      : data.icon;
+
+  title.textContent = data.name;
+  desc.textContent = data.desc;
+
+  if (viewOnly) {
+    popup.classList.add("view-mode");
+    cur = null;
+  } else {
+    popup.classList.remove("view-mode");
+    cur = id;
+  }
+
+  popup.classList.add("show");
 }
 
 function openItem(id) {
-    if (col.includes(id)) {
-        showPopup(id, true);
-        return;
-    }
-    showPopup(id, false);
+  playClickSound();
+
+  if (InventoryManager.has(id)) {
+    showPopup(id, true);
+    return;
+  }
+  showPopup(id, false);
 }
 
 function closePopup() {
-    document.getElementById('popup').classList.remove('show', 'view-mode');
-    cur = null;
+  playClickSound();
+
+  const popup = document.getElementById("popup");
+  if (!popup) return;
+
+  popup.classList.remove("show", "view-mode");
+  cur = null;
 }
 
 function takeItem() {
-    if (!cur) return;
-    const d = ITEMS[cur], idx = col.length;
-    col.push(cur);
-    document.querySelectorAll('.hotspot').forEach(el => {
-        if (el.getAttribute('onclick')?.includes(cur)) el.classList.add('taken');
-    });
-    const s = document.getElementById('s' + idx);
-    if (s) {
-        s.innerHTML = d.t === 'i' ? `<img src="${d.inv}" alt="${d.name}" title="${d.name}">` : d.inv;
-        s.title = d.name;
-        s.dataset.itemId = cur;
-        s.classList.add('filled');
-        s.onclick = () => openItem(s.dataset.itemId);
-    }
-    closePopup();
+  if (!cur) return;
+
+  playClickSound();
+
+  const takenId = cur;
+  InventoryManager.add(takenId);
+  InventoryManager.render("inv-grid", true);
+  syncTakenHotspots();
+
+  closePopup();
+
+  const toast = document.getElementById("toast");
+  const data = InventoryManager.getItemData(takenId);
+
+  if (toast && data) {
+    toast.textContent = `👜 ${data.name} 획득`;
+    toast.classList.add("show");
+    clearTimeout(tt);
+    tt = setTimeout(() => toast.classList.remove("show"), 1500);
+  }
 }
 
-/* ── MAP ── */
-function toggleMap() {
-    document.getElementById("map-panel").classList.toggle("open");
+/* 맵 */
+function toggleMap(e) {
+  if (e) e.stopPropagation();
+  playClickSound();
+
+  const panel = document.getElementById("map-panel");
+  if (panel) panel.classList.toggle("open");
 }
-
-/* [수정] hud-topright null 체크 추가 */
-document.addEventListener("click", (e) => {
-    const hud = document.getElementById("hud-topright");
-    if (hud && !hud.contains(e.target)) {
-        document.getElementById("map-panel").classList.remove("open");
-    }
-});
-
-let tt;
 
 function goRoom(roomName) {
-    const roomPaths = {
-        "강의실": "./classroom.html",
-        "정원치 교수님 연구실": "./jungprofessor.html",
-        "장석주 교수님 연구실": "./jangprofessorMain.html",
-        "라운지": "./lounge.html",
-        "서버실": "./server-room.html"
-    };
+  const roomPaths = {
+    "강의실": "./classroom.html",
+    "정원치 교수님 연구실": "./jungprofessor.html",
+    "장석주 교수님 연구실": "./jangprofessorMain.html",
+    "라운지": "./lounge.html",
+    "서버실": "./server-room.html"
+  };
 
-    document.getElementById("map-panel").classList.remove("open");
+  const panel = document.getElementById("map-panel");
+  if (panel) panel.classList.remove("open");
 
-    const t = document.getElementById("toast");
-    const targetPath = roomPaths[roomName];
+  const t = document.getElementById("toast");
+  const targetPath = roomPaths[roomName];
 
-    if (!targetPath) {
-        t.textContent = `❗ ${roomName} 페이지가 아직 없습니다.`;
-        t.classList.add("show");
-        clearTimeout(tt);
-        tt = setTimeout(() => t.classList.remove("show"), 2300);
-        return;
+  if (!targetPath) {
+    if (t) {
+      t.textContent = `❗ ${roomName} 페이지가 아직 없습니다.`;
+      t.classList.add("show");
+      clearTimeout(tt);
+      tt = setTimeout(() => t.classList.remove("show"), 2300);
     }
+    return;
+  }
 
+  if (t) {
     t.textContent = `📍 ${roomName} 으로 이동합니다…`;
     t.classList.add("show");
+  }
 
-    /* [수정] 발소리를 goRoom() 안으로 이동 */
-    const snd = new Audio('sound/footstep.mp3');
-    snd.volume = 0.8;
-    snd.play().catch(() => {});
+  const snd = new Audio("../sound/footstep.wav");
+  snd.volume = 0.9;
+  snd.currentTime = 0.05;
+  snd.play().catch(() => {});
 
-    clearTimeout(tt);
-    tt = setTimeout(() => {
-        t.classList.remove("show");
-        window.location.href = targetPath;
-    }, 800);
+  clearTimeout(tt);
+  tt = setTimeout(() => {
+    if (t) t.classList.remove("show");
+    window.location.href = targetPath;
+  }, 1600);
 }
 
-/* ── 탈출 팝업 ── */
+/* 탈출 */
 function openEsc() {
-    [0, 1, 2, 3].forEach((i) => {
-        document.getElementById("p" + i).value = "";
-    });
+  playClickSound();
 
-    document.getElementById("pw-msg").textContent = "";
-    document.getElementById("popup-esc").classList.add("show");
+  [0, 1, 2, 3].forEach((i) => {
+    const el = document.getElementById("p" + i);
+    if (el) el.value = "";
+  });
 
-    setTimeout(() => document.getElementById("p0").focus(), 60);
+  const msg = document.getElementById("pw-msg");
+  if (msg) msg.textContent = "";
+
+  const popup = document.getElementById("popup-esc");
+  if (!popup) return;
+
+  popup.classList.add("show");
+  setTimeout(() => {
+    const first = document.getElementById("p0");
+    if (first) first.focus();
+  }, 60);
 }
 
 function closeEsc() {
-    document.getElementById("popup-esc").classList.remove("show");
+  playClickSound();
+
+  const popup = document.getElementById("popup-esc");
+  if (popup) popup.classList.remove("show");
 }
 
 function pi(i) {
-    if (document.getElementById("p" + i).value.length === 1 && i < 3) {
-        document.getElementById("p" + (i + 1)).focus();
-    }
+  const el = document.getElementById("p" + i);
+  if (!el) return;
+
+  el.value = el.value.replace(/[^0-9]/g, "").slice(0, 1);
+
+  if (el.value.length === 1 && i < 3) {
+    const next = document.getElementById("p" + (i + 1));
+    if (next) next.focus();
+  }
 }
 
 function pk(e, i) {
-    if (e.key === "Backspace" && !document.getElementById("p" + i).value && i > 0) {
-        document.getElementById("p" + (i - 1)).focus();
+  const current = document.getElementById("p" + i);
+  if (!current) return;
+
+  if (e.key === "Backspace") {
+    if (current.value !== "") {
+      current.value = "";
+      e.preventDefault();
+      return;
     }
-    if (e.key === "Enter") {
-        tryEscape();
+
+    if (i > 0) {
+      e.preventDefault();
+      const prev = document.getElementById("p" + (i - 1));
+      if (prev) {
+        prev.value = "";
+        prev.focus();
+      }
     }
+    return;
+  }
+
+  if (e.key === "Enter") {
+    e.preventDefault();
+    tryEscape();
+  }
 }
 
 function tryEscape() {
-    const pw = [0, 1, 2, 3].map((i) => document.getElementById("p" + i).value).join("");
+  playClickSound();
 
-    if (pw.length < 4) {
-        document.getElementById("pw-msg").textContent = "4자리를 모두 입력해주세요.";
-        return;
-    }
+  const pw = [0, 1, 2, 3]
+    .map((i) => document.getElementById("p" + i)?.value || "")
+    .join("");
 
-    if (pw === PW) {
-        closeEsc();
-        document.getElementById("popup-success").classList.add("show");
-    } else {
-        document.getElementById("pw-msg").textContent = "🔒 비밀번호가 틀린 것 같다…";
-        [0, 1, 2, 3].forEach((i) => {
-            document.getElementById("p" + i).value = "";
-        });
-        document.getElementById("p0").focus();
-    }
+  const msg = document.getElementById("pw-msg");
+  if (!msg) return;
+
+  if (pw.length < 4) {
+    msg.textContent = "4자리를 모두 입력해주세요.";
+    return;
+  }
+
+  if (pw === PW) {
+    closeEsc();
+    const success = document.getElementById("popup-success");
+    if (success) success.classList.add("show");
+  } else {
+    msg.textContent = "🔒 비밀번호가 틀린 것 같다…";
+    [0, 1, 2, 3].forEach((i) => {
+      const el = document.getElementById("p" + i);
+      if (el) el.value = "";
+    });
+    const first = document.getElementById("p0");
+    if (first) first.focus();
+  }
 }
 
-/* ── ESC 키로 팝업 닫기 ── */
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        closePopup();
-        closeEsc();
+/* 이미 획득한 아이템 핫스팟 비활성화 */
+function syncTakenHotspots() {
+  document.querySelectorAll(".hotspot").forEach((el) => {
+    const clickText = el.getAttribute("onclick") || "";
+    let matched = false;
+
+    for (const id of LOUNGE_ITEMS) {
+      if (
+        (clickText.includes(`'${id}'`) || clickText.includes(`"${id}"`)) &&
+        InventoryManager.has(id)
+      ) {
+        matched = true;
+      }
     }
+
+    if (matched) {
+      el.classList.add("taken");
+    } else {
+      el.classList.remove("taken");
+    }
+  });
+}
+
+function closeSuccessOnEsc() {
+  const success = document.getElementById("popup-success");
+  if (success) success.classList.remove("show");
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+
+  const popup = document.getElementById("popup");
+  const esc = document.getElementById("popup-esc");
+  const imagePopup = document.getElementById("image-popup");
+  const success = document.getElementById("popup-success");
+
+  if (popup && popup.classList.contains("show")) {
+    closePopup();
+    return;
+  }
+
+  if (esc && esc.classList.contains("show")) {
+    closeEsc();
+    return;
+  }
+
+  if (imagePopup && imagePopup.classList.contains("show")) {
+    closeImagePopup();
+    return;
+  }
+
+  if (success && success.classList.contains("show")) {
+    closeSuccessOnEsc();
+  }
 });
 
-/* ── [수정] 클릭 사운드 경로 ../ 제거 ── */
-let audioCtx = null;
+document.addEventListener("DOMContentLoaded", () => {
+  InventoryManager.render("inv-grid", true);
+  syncTakenHotspots();
 
-document.addEventListener('click', () => {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const hud = document.getElementById("hud-topright");
+  const mapPanel = document.getElementById("map-panel");
+  document.addEventListener("click", (e) => {
+    if (hud && mapPanel && !hud.contains(e.target)) {
+      mapPanel.classList.remove("open");
+    }
+  });
 
-    const snd = new Audio('sound/click.mp3');
-    snd.volume = 0.5;
-    snd.play().catch(() => {});
+  const popup = document.getElementById("popup");
+  if (popup) {
+    popup.addEventListener("click", (e) => {
+      if (e.target === popup) closePopup();
+    });
+  }
+
+  const escPopup = document.getElementById("popup-esc");
+  if (escPopup) {
+    escPopup.addEventListener("click", (e) => {
+      if (e.target === escPopup) closeEsc();
+    });
+  }
 });
