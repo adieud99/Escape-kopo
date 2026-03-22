@@ -151,6 +151,7 @@ function showPopup(id, viewOnly = false) {
     cur = id;
   }
 
+  popup.style.display = "flex";
   popup.classList.add("show");
 }
 
@@ -171,6 +172,7 @@ function closePopup() {
   if (!popup) return;
 
   popup.classList.remove("show", "view-mode");
+  popup.style.display = "none";
   cur = null;
 }
 
