@@ -46,6 +46,7 @@ function toggleMusic(){
 
 /* ── 게임 시작 ── */
 function startGame(){
+  localStorage.removeItem("global_escape_inventory");
   scene.style.transition='opacity 0.6s ease';
   scene.style.opacity='0';
   setTimeout(()=>{ window.location.href='intro.html'; },600);
