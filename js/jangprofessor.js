@@ -252,7 +252,7 @@ function goRoom(roomName) {
     "장석주 교수님 연구실": "./jangprofessorMain.html",
     "정원치 교수님 연구실": "./jungprofessor.html",
     "라운지": "./lounge.html",
-    "서버실": "./server-room.html"
+    "서버실": "./server.html"
   };
 
   const panel = document.getElementById("map-panel");
@@ -271,16 +271,6 @@ function goRoom(roomName) {
     return;
   }
 
-  // 🔐 서버실 진입 조건: 인벤토리에 severKey가 있어야 함
-  if (roomName === "서버실" && !InventoryManager.has("severKey")) {
-    if (t) {
-      t.textContent = `🔒 서버실 카드키가 없으면 들어갈 수 없습니다.`;
-      t.classList.add("show");
-      clearTimeout(tt);
-      tt = setTimeout(() => t.classList.remove("show"), 2300);
-    }
-    return;
-  }
 
   const snd = new Audio("../sound/footstep.wav");
   snd.volume = 0.9;
