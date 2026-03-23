@@ -46,7 +46,7 @@ function showPopup(id, viewOnly) {
     d.t === "i" ? `<img src="${d.icon}" alt="${d.name}">` : d.icon;
 
   document.getElementById("p-title").textContent = d.name;
-  document.getElementById("p-desc").textContent = d.desc;
+  document.getElementById("p-desc").innerHTML = d.desc;
 
   /* 핵심: 상태 완전 초기화 */
   popup.classList.remove("show", "view-mode");
